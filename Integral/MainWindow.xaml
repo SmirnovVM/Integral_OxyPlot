@@ -1,0 +1,114 @@
+﻿<Window x:Class="Integral.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Integral"
+        mc:Ignorable="d"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="Смирнов В.М. 1-46М" Height="475" Width="450" ResizeMode="NoResize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF6AF3C8" Offset="0.004"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <Border Padding="10">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height= "20"/>
+                    <RowDefinition Height= "50"/>
+                    <RowDefinition Height= "20"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Введите верхнюю границу"/>
+                <TextBox TextAlignment="Center" Grid.Row="0" Text="100000" x:Name="_b" RenderTransformOrigin="1.64,0.5" Margin="213,0,10,0"/>
+                <TextBox TextAlignment="Center" IsEnabled="False" Grid.Row="1" RenderTransformOrigin="1.7,0.488" Margin="213,20,5,10" Text="2x - ln(2x) + 234"/>
+
+                <TextBox TextAlignment="Center" Grid.Row="1" Text="1" x:Name="_a" Margin="213,49,5,1" Grid.RowSpan="2"/>
+                <TextBlock HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Введите нижнюю границу" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Интеграл: " VerticalAlignment="Top"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Введите количество разбиений: " Grid.Column="0" HorizontalAlignment="Right" Margin="0,13,124,-3"/>
+                <TextBox TextAlignment="Center" Margin="214,10,0,0" HorizontalAlignment="Left" Width="200" x:Name="_n" Text="1000000" Grid.ColumnSpan="2"/>
+            </Grid>
+            <Grid Margin="0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height= "15"/>
+                        <RowDefinition Height= "35"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="1" Content="Вычислить"  Grid.Column="0" x:Name="ButtonCulc" Click="ButtonCulc_Click"/>
+                    <CheckBox  Grid.Row="0" Content="Использовать Parallel" x:Name="_check"/>
+                </Grid>
+
+                <Grid Grid.Column="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height= "25"/>
+                        <RowDefinition Height= "25"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Результат=" FontSize="10" Grid.Column="0"/>
+                        <TextBlock TextAlignment="Center" x:Name="_resultText" Grid.ColumnSpan="2" Margin="59,0,10,0"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Время=" FontSize="10" Grid.Column="0"/>
+                        <TextBlock TextAlignment="Center" Grid.Column="1" x:Name="_timeText"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Button Height="50" x:Name="PoslGraph" Click="PoslGraph_Click">
+                <TextBlock Text="График зависимости времени расчета от количества разбиений (последовательно)"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </Button>
+            <Button Height="50" Margin="0 10" x:Name="ParalGraph" Click="ParalGraph_Click">
+                <TextBlock Text="График зависимости времени расчета от количества разбиений (параллельно)"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </Button>
+            <Button Height="50" x:Name="barGraph" Click="barGraph_Click">
+                <TextBlock Text="Столбчатая диаграмма сравнения времени выполнения посл. и парал. выполнения"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </Button>
+
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Button Name="bt_Clear" Margin="0,10,20,10" Height="30" Content="Очистить результат" Click="bt_Clear_Click"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Button Name="bt_Exit" Margin="20,10,0,10" Height="30" Content="Закрыть приложение" Click="bt_Exit_Click"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+    </Border>
+
+</Window>
