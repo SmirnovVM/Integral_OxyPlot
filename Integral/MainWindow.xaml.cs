@@ -89,21 +89,39 @@ namespace Integral
             Stopwatch timer = new Stopwatch();
             if (_check.IsChecked.Value == true)
             {
-                timer.Start();
-                In = integral.calcParr(n, a, b, x => (32 * x - Math.Log10(2 * x) - 41));
-                timer.Stop();
-                this._resultText.Text = Convert.ToString(In);
-                this._timeText.Text = Convert.ToString(timer.ElapsedMilliseconds);
-                timer.Reset();
+                task = Task.Run(() =>
+                {
+                    timer.Start();
+                    In = integral.calcParr(n, a, b, x => 2 * x - Math.Log10(2 * x) + 234);
+                    timer.Stop();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        this._resultText.Text = Convert.ToString(In);
+                        this._timeText.Text = Convert.ToString(timer.ElapsedMilliseconds);
+                        ButtonCulc.IsEnabled = true;
+                    });
+
+                    timer.Reset();
+                });
             }
             if (_check.IsChecked.Value == false)
             {
-                timer.Start();
-                In = integral.calcPosl(n, a, b, x => 32 * x - Math.Log10(2 * x) - 41);
-                timer.Stop();
-                this._resultText.Text = Convert.ToString(In);
-                this._timeText.Text = Convert.ToString(timer.ElapsedMilliseconds);
-                timer.Reset();
+                task = Task.Run(() =>
+                {
+                    timer.Start();
+                    In = integral.calcParr(n, a, b, x => 2 * x - Math.Log10(2 * x) + 234);
+                    timer.Stop();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        this._resultText.Text = Convert.ToString(In);
+                        this._timeText.Text = Convert.ToString(timer.ElapsedMilliseconds);
+                        ButtonCulc.IsEnabled = true;
+                    });
+
+                    timer.Reset();
+                });
             }
 
 
@@ -134,7 +152,7 @@ namespace Integral
         Posl_graph posl = new Posl_graph();
         Paral_graph paral = new Paral_graph();
         Bars bar = new Bars();
-
+        private Task task;
 
         private void PoslGraph_Click(object sender, RoutedEventArgs e)
         {
